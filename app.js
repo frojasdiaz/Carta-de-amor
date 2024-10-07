@@ -1,18 +1,36 @@
 let anniversary = "2024-07-16";
-let date = new Date(anniversary);
-let dateVal = date.getTime();
+let anniversaryDate = new Date(anniversary);
 let today = new Date();
-let now = today.getTime();
-let value = now - dateVal;
-let day = Math.floor(value / (1000 * 60 * 60 * 24));
-let month = Math.floor(value / (1000 * 60 * 60 * 24 * 30.4375));
-let year = Math.floor(value / (1000 * 60 * 60 * 24 * 365.25));
 
-console.log(value);
+// Función para calcular la diferencia en años, meses y días
+function dateDiff(startDate, endDate) {
+    let years = endDate.getFullYear() - startDate.getFullYear();
+    let months = endDate.getMonth() - startDate.getMonth();
+    let days = endDate.getDate() - startDate.getDate();
 
-document.getElementById("days").textContent = day.toString();
-document.getElementById("months").textContent = month.toString();
-document.getElementById("years").textContent = year.toString();
+    // Si los días son negativos, resta un mes y ajusta los días
+    if (days < 0) {
+        months--;
+        let lastDayOfPreviousMonth = new Date(endDate.getFullYear(), endDate.getMonth(), 0).getDate();
+        days += lastDayOfPreviousMonth;
+    }
+
+    // Si los meses son negativos, resta un año y ajusta los meses
+    if (months < 0) {
+        years--;
+        months += 12;
+    }
+
+    return { years, months, days };
+}
+
+let diff = dateDiff(anniversaryDate, today);
+
+// Actualiza el contenido en la página con los resultados correctos
+document.getElementById("days").textContent = diff.days.toString();
+document.getElementById("months").textContent = diff.months.toString();
+document.getElementById("years").textContent = diff.years.toString();
+
 
 
 let musicPlayer = document.querySelector(".music-container");
