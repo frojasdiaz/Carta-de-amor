@@ -48,7 +48,7 @@ let prevBtn = document.querySelector(".prev-track");
 let trackIndex = 0;
 let isPlaying = false;
 let isHidden = true;
-
+//Falso
 let currentTrack = document.createElement("audio");
 let soundBars = document.querySelector(".sound-bars");
 
