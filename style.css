@@ -1,6 +1,9 @@
-*{
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
 
 :root{
@@ -16,7 +19,6 @@
     background-color: #cccccc;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     background: var(--bg-color);
     display: flex;
     align-items: center;
@@ -28,6 +30,17 @@
     height: 100vh;
     width: 100%;
     position: relative;
+  }
+  .screen{
+    height: 100vh;
+    min-height: 100vh;
+  }
+  @supports (height: 100svh){
+    .background,
+    .screen{
+      height: 100svh;
+      min-height: 100svh;
+    }
   }
   .one{
     width: 100%;
@@ -48,22 +61,28 @@
     place-items: center;
   }
   .container > .envelope-wrapper {
+    --env-w: 500px;
+    --env-h: 240px;
+    --env-top: 150px;
+    --env-side: 250px;
+    --env-bottom: 100px;
+    --letter-pop: 140px;
     background: var(--bg-envelope-color);
     box-shadow: 0 0 40px var(--shadow-color);
   }
   .envelope-wrapper > .envelope {
     position: relative;
-    width: 500px;
-    height: 240px;
+    width: var(--env-w);
+    height: var(--env-h);
   }
   .envelope-wrapper > .envelope::before {
     content: "";
     position: absolute;
     top: 0;
     z-index: 2;
-    border-top: 150px solid var(--envelope-tab);
-    border-right: 250px solid transparent;
-    border-left: 250px solid transparent;
+    border-top: var(--env-top) solid var(--envelope-tab);
+    border-right: var(--env-side) solid transparent;
+    border-left: var(--env-side) solid transparent;
     transform-origin: top;
     transition: all 0.5s ease-in-out 0.7s;
   }
@@ -73,10 +92,10 @@
     z-index: 2;
     width: 0px;
     height: 0px;
-    border-top: 150px solid transparent;
-    border-right: 250px solid var(--envelope-cover);
-    border-bottom: 100px solid var(--envelope-cover);
-    border-left: 250px solid var(--envelope-cover);
+    border-top: var(--env-top) solid transparent;
+    border-right: var(--env-side) solid var(--envelope-cover);
+    border-bottom: var(--env-bottom) solid var(--envelope-cover);
+    border-left: var(--env-side) solid var(--envelope-cover);
   }
   .envelope > .letter {
     position: absolute;
@@ -130,7 +149,7 @@
     z-index: 0;
   }
   .flap > .envelope > .letter {
-    bottom: 140px;
+    bottom: var(--letter-pop);
     transform: scale(1.5);
     transition-delay: 1s;
   }
@@ -151,16 +170,16 @@
     margin: auto;
   }
 
-  #window #gif img{
+  #window .card-gif img{
     opacity: 0;
     transition: opacity .3s, width .3s;
     width: 5rem;
   }
-  #gif{
+  .card-gif{
     pointer-events: none;
   }
 
-  #window:hover #gif img{
+  #window:hover .card-gif img{
     opacity: 1;
     width: 11rem;
   }
@@ -253,4 +272,83 @@
   .prev-track:hover, .playpause-track:hover, .next-track:hover{
     background-color: rgb(190, 190, 190);
     transition-duration: .5s;
+  }
+
+  #window{
+    width: min(34rem, 92vw);
+  }
+
+  .photo-row{
+    width: 100%;
+  }
+
+  @media (max-width: 768px){
+    .container{
+      top: 0.5rem;
+    }
+
+    .container > .envelope-wrapper{
+      --env-w: 92vw;
+      --env-h: 44vw;
+      --env-top: 28vw;
+      --env-side: 46vw;
+      --env-bottom: 18vw;
+      --letter-pop: 26vw;
+    }
+
+    .envelope > .letter{
+      right: 15%;
+      width: 70%;
+      height: 100%;
+      padding: 12px 12px 40px 12px;
+    }
+
+    .flap > .envelope > .letter{
+      transform: scale(1.25);
+    }
+
+    .music-container{
+      width: calc(100vw - 3rem);
+    }
+
+    .sound-bars-lottie{
+      left: 3.4rem;
+    }
+
+    #window .card-gif{
+      display: none;
+    }
+
+    #window .photo-row{
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    #window .photo-row img{
+      width: 8rem;
+    }
+
+    .text-6xl{
+      font-size: 2.5rem;
+    }
+
+    .text-5xl{
+      font-size: 2.25rem;
+    }
+
+    #myCountdown{
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    #myCountdown > div{
+      width: 8rem;
+      height: 9.5rem;
+      gap: 0.5rem;
+    }
+
+    .counter-gif{
+      display: none;
+    }
   }
